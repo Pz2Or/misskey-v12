@@ -549,3 +549,8 @@ hr {
     transform:  scaleX(1.00) scaleY(1.00) ;
   }
 }
+
+.blur {
+	backdrop-filter: var(--blur, blur(15px) saturate(1.3) brightness(1.1));
+	-webkit-backdrop-filter: var(--blur, blur(15px) saturate(1.3) brightness(1.1));
+}
