@@ -143,15 +143,13 @@ const onContextmenu = (e: MouseEvent) => {
 		cursor: default;
 	}
 
-	&.reacted {
-		background: var(--accent);
-
-		&:hover {
-			background: var(--accent);
-		}
+	&.reacted, &.reacted:hover {
+		background: var(--accentedBg);
+		color: var(--accent);
+		border: 1px solid var(--accent);
 
 		> .count {
-			color: var(--fgOnAccent);
+			color: var(--accent);
 		}
 
 		> .icon {
