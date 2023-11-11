@@ -10,12 +10,13 @@
 
 <script lang="ts" setup>
 import { onUnmounted } from 'vue';
-import { stream } from '@/stream';
+import { stream, isReloading } from '@/stream';
 import { i18n } from '@/i18n';
 
 let hasDisconnected = $ref(false);
 
 function onDisconnected() {
+	if (isReloading) return;
 	hasDisconnected = true;
 }
 
