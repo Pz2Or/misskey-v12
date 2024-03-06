@@ -6,6 +6,7 @@
 	class="hkzvhatu _button"
 	:class="{ reacted: note.myReaction == reaction, canToggle }"
 	@click="toggleReaction()"
+	@contextmenu.stop="onContextmenu"
 >
 	<XReactionIcon class="icon" :reaction="reaction" :custom-emojis="note.emojis"/>
 	<span class="count">{{ count }}</span>
@@ -13,6 +14,10 @@
 </template>
 
 <script lang="ts" setup>
+// onContextmenu Code written by @sim1222
+// original repository: https://github.com/sim1222/misskey
+
+
 import { computed, onMounted, ref, watch } from 'vue';
 import * as misskey from 'misskey-js';
 import XDetails from '@/components/MkReactionsViewer.details.vue';
@@ -20,6 +25,7 @@ import XReactionIcon from '@/components/MkReactionIcon.vue';
 import * as os from '@/os';
 import { useTooltip } from '@/scripts/use-tooltip';
 import { $i } from '@/account';
+import { openReactionImportMenu } from '@/scripts/reactionImportMenu';
 
 const props = defineProps<{
 	reaction: string;
@@ -88,6 +94,11 @@ useTooltip(buttonRef, async (showing) => {
 		targetElement: buttonRef.value,
 	}, {}, 'closed');
 }, 100);
+
+const onContextmenu = (e: MouseEvent) => {
+	e.preventDefault();
+	openReactionImportMenu(e, props.reaction, props.note.id);
+};
 </script>
 
 <style lang="scss" scoped>
