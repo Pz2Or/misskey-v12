@@ -25,6 +25,13 @@ export function getNoteMenu(props: {
 	);
 
 	const appearNote = isRenote ? props.note.renote as misskey.entities.Note : props.note;
+	
+	// @sim1222
+	function reactionList() :void {
+		os.popup(defineAsyncComponent(() => import('@/components/MkReactionList.vue')), {
+			note: props.note,
+		});
+	}
 
 	function del(): void {
 		os.confirm({
@@ -230,6 +237,11 @@ export function getNoteMenu(props: {
 				text: i18n.ts.translate,
 				action: translate,
 			} : undefined,
+			{
+				icon: ',',
+				text: i18n.ts.showState,
+				action: () => reactionList(),
+			},
 			null,
 			statePromise.then(state => state.isFavorited ? {
 				icon: 'fas fa-star',
