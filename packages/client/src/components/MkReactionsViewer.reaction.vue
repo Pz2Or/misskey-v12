@@ -17,8 +17,7 @@
 // onContextmenu Code written by @sim1222
 // original repository: https://github.com/sim1222/misskey
 
-
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, defineAsyncComponent, onMounted, ref, watch } from 'vue';
 import * as misskey from 'misskey-js';
 import XDetails from '@/components/MkReactionsViewer.details.vue';
 import XReactionIcon from '@/components/MkReactionIcon.vue';
