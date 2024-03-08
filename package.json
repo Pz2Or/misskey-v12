@@ -17,7 +17,7 @@
 		"start:test": "cd packages/backend && cross-env NODE_ENV=test node --experimental-json-modules ./built/index.js",
 		"init": "pnpm run migrate",
 		"migrate": "cd packages/backend && npx typeorm migration:run -d ormconfig.js",
-		"migrateandstart": "pnpm run migrate && nppm run start",
+		"migrateandstart": "pnpm run migrate && pnpm run start",
 		"gulp": "gulp build",
 		"watch": "pnpm run dev",
 		"dev": "node ./scripts/dev.mjs",
