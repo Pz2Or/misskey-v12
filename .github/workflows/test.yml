@@ -35,7 +35,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: corepack enable
     - name: Install dependencies
-      run: pnpm i
+      run: pnpm install --no-frozen-lockfile
     - name: Copy Configure
       run: cp .github/misskey/test.yml .config
     - name: Build
