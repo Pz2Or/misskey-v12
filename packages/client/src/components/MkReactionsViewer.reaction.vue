@@ -5,7 +5,7 @@
 	v-ripple="canToggle"
 	class="hkzvhatu _button"
 	:class="{ reacted: note.myReaction == reaction, canToggle }"
-	@click="toggleReaction()"
+	@click="toggleReaction"
 	@contextmenu.stop="onContextmenu"
 >
 	<XReactionIcon class="icon" :reaction="reaction" :custom-emojis="note.emojis"/>
@@ -16,8 +16,10 @@
 <script lang="ts" setup>
 // onContextmenu Code written by @sim1222
 // original repository: https://github.com/sim1222/misskey
+// Code used as reference for instance reaction
+// original repository: https://github.com/shrimpia/misskey
 
-import { computed, defineAsyncComponent, onMounted, ref, watch } from 'vue';
+import { computed, ComputedRef, defineAsyncComponent, onMounted, ref, watch } from 'vue';
 import * as misskey from 'misskey-js';
 import XDetails from '@/components/MkReactionsViewer.details.vue';
 import XReactionIcon from '@/components/MkReactionIcon.vue';
@@ -25,6 +27,7 @@ import * as os from '@/os';
 import { useTooltip } from '@/scripts/use-tooltip';
 import { $i } from '@/account';
 import { openReactionImportMenu } from '@/scripts/reactionImportMenu';
+import { instance } from '@/instance';
 
 const props = defineProps<{
 	reaction: string;
@@ -33,12 +36,32 @@ const props = defineProps<{
 	note: misskey.entities.Note;
 }>();
 
+const customEmojis = instance.emojis;
+
+const reactionName = computed(() => {
+	const reactions = props.reaction.replace(':', '');
+	return reactions.slice(0, reactions.indexOf('@'));
+});
+
+const instanceReaction: ComputedRef<string | null> = computed(() => (customEmojis).find(it => it.name === reactionName.value)?.name ?? null);
+
 const buttonRef = ref<HTMLElement>();
 
 const canToggle = computed(() => !props.reaction.match(/@\w/) && $i);
 
-const toggleReaction = () => {
-	if (!canToggle.value) return;
+const chooseInstanceReaction = (ev) => {
+	if (!instanceReaction.value) return;
+	os.api('notes/reactions/create', {
+		noteId: props.note.id,
+		reaction: `:${instanceReaction.value}:`,
+	});
+};
+
+const toggleReaction = (ev) => {
+	if (!canToggle.value) {
+		chooseInstanceReaction(ev);
+		return;
+	}
 
 	const oldReaction = props.note.myReaction;
 	if (oldReaction) {
