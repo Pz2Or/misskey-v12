@@ -4,7 +4,7 @@
 	ref="buttonRef"
 	v-ripple="canToggle"
 	class="hkzvhatu _button"
-	:class="{ reacted: note.myReaction == reaction, canToggle }"
+	:class="{ reacted: note.myReaction == reaction, canToggle: (canToggle || instanceReaction) }"
 	@click="toggleReaction"
 	@contextmenu.stop="onContextmenu"
 >
