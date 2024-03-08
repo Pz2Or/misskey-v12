@@ -10,11 +10,11 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [18.x, 20.x]
 
     services:
       postgres:
-        image: postgres:13
+        image: postgres:15
         ports:
           - 54312:5432
         env:
@@ -33,17 +33,12 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
-        cache-dependency-path: |
-          packages/backend/yarn.lock
-          packages/client/yarn.lock
+    - run: corepack enable
     - name: Install dependencies
-      run: yarn install
-    - name: Check yarn.lock
-      run: git diff --exit-code yarn.lock
+      run: pnpm i
     - name: Copy Configure
       run: cp .github/misskey/test.yml .config
     - name: Build
-      run: yarn build
+      run: pnpm build
     - name: Test
-      run: yarn mocha
+      run: pnpm mocha

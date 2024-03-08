@@ -1,31 +1,35 @@
-const execa = require('execa');
+import { execa } from 'execa';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 (async () => {
-	await execa('npm', ['run', 'clean'], {
+	await execa('pnpm', ['run', 'clean'], {
 		cwd: __dirname + '/../',
 		stdout: process.stdout,
 		stderr: process.stderr,
 	});
 
-	execa('npx', ['gulp', 'watch'], {
+	execa('pnpm', ['gulp', 'watch'], {
 		cwd: __dirname + '/../',
 		stdout: process.stdout,
 		stderr: process.stderr,
 	});
 
-	execa('npm', ['run', 'watch'], {
+	execa('pnpm', ['run', 'watch'], {
 		cwd: __dirname + '/../packages/backend',
 		stdout: process.stdout,
 		stderr: process.stderr,
 	});
 
-	execa('npm', ['run', 'watch'], {
+	execa('pnpm', ['run', 'watch'], {
 		cwd: __dirname + '/../packages/client',
 		stdout: process.stdout,
 		stderr: process.stderr,
 	});
 
-	execa('npm', ['run', 'watch'], {
+	execa('pnpm', ['run', 'watch'], {
 		cwd: __dirname + '/../packages/sw',
 		stdout: process.stdout,
 		stderr: process.stderr,
@@ -33,7 +37,7 @@ const execa = require('execa');
 
 	const start = async () => {
 		try {
-			await execa('npm', ['run', 'start'], {
+			await execa('pnpm', ['run', 'start'], {
 				cwd: __dirname + '/../',
 				stdout: process.stdout,
 				stderr: process.stderr,
