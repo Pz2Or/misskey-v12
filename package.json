@@ -12,7 +12,8 @@
 	},
 	"private": true,
 	"scripts": {
-		"build": "node ./scripts/build.mjs",
+		"build-pre": "node ./scripts/build-pre.js",
+		"build": "pnpm build-pre && pnpm -r build && pnpm gulp",
 		"start": "cd packages/backend && node --experimental-json-modules ./built/index.js",
 		"start:test": "cd packages/backend && cross-env NODE_ENV=test node --experimental-json-modules ./built/index.js",
 		"init": "pnpm run migrate",
@@ -21,7 +22,7 @@
 		"gulp": "gulp build",
 		"watch": "pnpm run dev",
 		"dev": "node ./scripts/dev.mjs",
-		"lint": "node ./scripts/lint.mjs",
+		"lint": "pnpm -r lint ",
 		"cy:open": "cypress open --browser --e2e --config-file=cypress.config.ts",
 		"cy:run": "cypress run",
 		"e2e": "start-server-and-test start:test http://localhost:61812 cy:run",
