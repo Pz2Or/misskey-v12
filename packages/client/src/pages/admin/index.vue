@@ -170,11 +170,6 @@ const menuDef = $computed(() => [{
 		to: '/admin/instance-block',
 		active: currentPage?.route.name === 'instance-block',
 	}, {
-		icon: 'ti ti-ban',
-		text: i18n.ts.emailDomainBlocking,
-		to: '/admin/email-block',
-		active: currentPage?.route.name === 'email-block',
-	}, {
 		icon: 'ti ti-ghost',
 		text: i18n.ts.proxyAccount,
 		to: '/admin/proxy-account',
