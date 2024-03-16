@@ -72,11 +72,7 @@ watch(() => props.antennaId, async () => {
 }, { immediate: true });
 
 const headerActions = $computed(() => antenna ? [{
-	icon: 'fas fa-calendar-alt',
-	text: i18n.ts.jumpToSpecifiedDate,
-	handler: timetravel,
-}, {
-	icon: 'fas fa-cog',
+	icon: 'ti ti-calendar-time',
 	text: i18n.ts.settings,
 	handler: settings,
 }] : []);
@@ -85,7 +81,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata(computed(() => antenna ? {
 	title: antenna.name,
-	icon: 'fas fa-satellite',
+	icon: 'ti ti-antenna',
 } : null));
 </script>
 
